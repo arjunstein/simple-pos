@@ -4,7 +4,8 @@ import {
     ShoppingCart, 
     Package, 
     FolderTree,
-    ClipboardList
+    ClipboardList,
+    Menu
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -23,14 +24,13 @@ export default function Layout({ children }) {
     const { url } = usePage();
 
     return (
-        <div className="flex h-screen bg-gray-100">
-            <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0 bg-white">
-                <div className="flex-1 flex flex-col min-h-0 border-r">
-                    <div className="flex items-center h-16 px-4 font-bold text-lg">
+        <div className="flex h-screen bg-gray-50">
+            <div className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 bg-white border-r">
+                <div className="flex-1 flex flex-col min-h-0">
+                    <div className="flex items-center h-14 px-4 font-bold text-lg border-b">
                         POS Application
                     </div>
-                    <Separator />
-                    <nav className="flex-1 px-2 py-4 space-y-1">
+                    <nav className="flex-1 px-2 py-3 space-y-1">
                         {navigation.map((item) => {
                             const Icon = item.icon;
                             const isActive = url === item.href;
@@ -38,13 +38,13 @@ export default function Layout({ children }) {
                                 <Link
                                     key={item.name}
                                     href={item.href}
-                                    className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                                    className={`flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors ${
                                         isActive
                                             ? 'bg-gray-100 text-gray-900'
                                             : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                                     }`}
                                 >
-                                    <Icon className="mr-3 h-5 w-5" />
+                                    <Icon className="mr-3 h-5 w-5 flex-shrink-0" />
                                     {item.name}
                                 </Link>
                             );
@@ -52,17 +52,19 @@ export default function Layout({ children }) {
                     </nav>
                 </div>
             </div>
-            <div className="md:pl-64 flex flex-col flex-1">
-                <div className="md:hidden flex items-center justify-between p-4 bg-white border-b">
-                    <span className="font-bold">POS Application</span>
+            <div className="lg:pl-64 flex flex-col flex-1 w-full">
+                <header className="lg:hidden flex items-center justify-between p-3 bg-white border-b shadow-sm">
+                    <span className="font-bold text-lg">POS</span>
                     <Sheet>
                         <SheetTrigger asChild>
                             <Button variant="outline" size="icon">
-                                <ShoppingCart className="h-5 w-5" />
+                                <Menu className="h-5 w-5" />
                             </Button>
                         </SheetTrigger>
-                        <SheetContent side="left">
-                            <nav className="flex flex-col space-y-2 mt-4">
+                        <SheetContent side="left" className="w-64">
+                            <div className="font-bold text-lg mb-4">POS Application</div>
+                            <Separator className="mb-4" />
+                            <nav className="flex flex-col space-y-1">
                                 {navigation.map((item) => {
                                     const Icon = item.icon;
                                     const isActive = url === item.href;
@@ -70,7 +72,7 @@ export default function Layout({ children }) {
                                         <Link
                                             key={item.name}
                                             href={item.href}
-                                            className={`flex items-center px-4 py-2 text-sm font-medium rounded-md ${
+                                            className={`flex items-center px-3 py-2 text-sm font-medium rounded-md ${
                                                 isActive
                                                     ? 'bg-gray-100 text-gray-900'
                                                     : 'text-gray-600 hover:bg-gray-50'
@@ -84,9 +86,11 @@ export default function Layout({ children }) {
                             </nav>
                         </SheetContent>
                     </Sheet>
-                </div>
-                <main className="flex-1 overflow-y-auto p-4 md:p-8">
-                    {children}
+                </header>
+                <main className="flex-1 overflow-y-auto p-3 md:p-6">
+                    <div className="max-w-7xl mx-auto">
+                        {children}
+                    </div>
                 </main>
                 <Toaster />
             </div>

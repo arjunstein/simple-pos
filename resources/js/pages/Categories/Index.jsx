@@ -86,38 +86,39 @@ export default function Index({ categories }) {
 
     return (
         <Layout>
-            <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                    <h1 className="text-3xl font-bold">Categories</h1>
-                    <Button onClick={openNewDialog}>
+            <div className="space-y-3 sm:space-y-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                    <h1 className="text-xl sm:text-2xl font-bold">Categories</h1>
+                    <Button onClick={openNewDialog} className="w-full sm:w-auto">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Category
                     </Button>
                 </div>
                 
                 <Card>
-                    <CardHeader>
-                        <CardTitle>All Categories</CardTitle>
+                    <CardHeader className="pb-3">
+                        <CardTitle className="text-lg">All Categories</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>ID</TableHead>
+                                    <TableHead className="w-16">ID</TableHead>
                                     <TableHead>Name</TableHead>
-                                    <TableHead>Actions</TableHead>
+                                    <TableHead className="w-24 text-right">Actions</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {categories.map((category) => (
                                     <TableRow key={category.id}>
-                                        <TableCell>{category.id}</TableCell>
+                                        <TableCell className="font-medium">{category.id}</TableCell>
                                         <TableCell className="font-medium">{category.name}</TableCell>
                                         <TableCell>
-                                            <div className="flex space-x-2">
+                                            <div className="flex justify-end gap-1">
                                                 <Button
                                                     variant="outline"
                                                     size="icon"
+                                                    className="h-8 w-8"
                                                     onClick={() => handleEdit(category)}
                                                 >
                                                     <Pencil className="h-4 w-4" />
@@ -125,6 +126,7 @@ export default function Index({ categories }) {
                                                 <Button
                                                     variant="destructive"
                                                     size="icon"
+                                                    className="h-8 w-8"
                                                     onClick={() => handleDelete(category.id)}
                                                 >
                                                     <Trash2 className="h-4 w-4" />
@@ -135,7 +137,7 @@ export default function Index({ categories }) {
                                 ))}
                                 {categories.length === 0 && (
                                     <TableRow>
-                                        <TableCell colSpan="3" className="text-center py-4">
+                                        <TableCell colSpan={3} className="text-center py-4">
                                             No categories found
                                         </TableCell>
                                     </TableRow>

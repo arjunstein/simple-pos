@@ -103,68 +103,72 @@ export default function Index({ products, categories }) {
 
     return (
         <Layout>
-            <div className="space-y-6">
-                <div className="flex justify-between items-center">
-                    <h1 className="text-3xl font-bold">Products</h1>
-                    <Button onClick={openNewDialog}>
+            <div className="space-y-3 sm:space-y-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                    <h1 className="text-xl sm:text-2xl font-bold">Products</h1>
+                    <Button onClick={openNewDialog} className="w-full sm:w-auto">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Product
                     </Button>
                 </div>
                 
                 <Card>
-                    <CardHeader>
-                        <CardTitle>All Products</CardTitle>
+                    <CardHeader className="pb-3">
+                        <CardTitle className="text-lg">All Products</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>ID</TableHead>
-                                    <TableHead>Name</TableHead>
-                                    <TableHead>Category</TableHead>
-                                    <TableHead>Price</TableHead>
-                                    <TableHead>Stock</TableHead>
-                                    <TableHead>Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {products.map((product) => (
-                                    <TableRow key={product.id}>
-                                        <TableCell>{product.id}</TableCell>
-                                        <TableCell className="font-medium">{product.name}</TableCell>
-                                        <TableCell>{product.category?.name || '-'}</TableCell>
-                                        <TableCell>${parseFloat(product.price).toFixed(2)}</TableCell>
-                                        <TableCell>{product.stock}</TableCell>
-                                        <TableCell>
-                                            <div className="flex space-x-2">
-                                                <Button
-                                                    variant="outline"
-                                                    size="icon"
-                                                    onClick={() => handleEdit(product)}
-                                                >
-                                                    <Pencil className="h-4 w-4" />
-                                                </Button>
-                                                <Button
-                                                    variant="destructive"
-                                                    size="icon"
-                                                    onClick={() => handleDelete(product.id)}
-                                                >
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                {products.length === 0 && (
+                        <div className="overflow-x-auto">
+                            <Table>
+                                <TableHeader>
                                     <TableRow>
-                                        <TableCell colSpan="6" className="text-center py-4">
-                                            No products found
-                                        </TableCell>
+                                        <TableHead className="w-10">ID</TableHead>
+                                        <TableHead>Name</TableHead>
+                                        <TableHead className="hidden md:table-cell">Category</TableHead>
+                                        <TableHead className="text-right">Price</TableHead>
+                                        <TableHead className="text-right hidden sm:table-cell">Stock</TableHead>
+                                        <TableHead className="w-24 text-right">Actions</TableHead>
                                     </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
+                                </TableHeader>
+                                <TableBody>
+                                    {products.map((product) => (
+                                        <TableRow key={product.id}>
+                                            <TableCell className="font-medium">{product.id}</TableCell>
+                                            <TableCell className="font-medium">{product.name}</TableCell>
+                                            <TableCell className="hidden md:table-cell">{product.category?.name || '-'}</TableCell>
+                                            <TableCell className="text-right">${parseFloat(product.price).toFixed(2)}</TableCell>
+                                            <TableCell className="text-right hidden sm:table-cell">{product.stock}</TableCell>
+                                            <TableCell>
+                                                <div className="flex justify-end gap-1">
+                                                    <Button
+                                                        variant="outline"
+                                                        size="icon"
+                                                        className="h-8 w-8"
+                                                        onClick={() => handleEdit(product)}
+                                                    >
+                                                        <Pencil className="h-4 w-4" />
+                                                    </Button>
+                                                    <Button
+                                                        variant="destructive"
+                                                        size="icon"
+                                                        className="h-8 w-8"
+                                                        onClick={() => handleDelete(product.id)}
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+                                                </div>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                    {products.length === 0 && (
+                                        <TableRow>
+                                            <TableCell colSpan={6} className="text-center py-4">
+                                                No products found
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
                     </CardContent>
                 </Card>
 
